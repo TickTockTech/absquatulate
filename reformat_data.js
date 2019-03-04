@@ -29,24 +29,6 @@ function add_condition(note)
 
 // Reformat the data to be a list of provider:plan entries so we can draw them in a table.
 var reworked_data = {};
-var table_items = {
-    "analytics": {
-        "type": "yes_no",
-        "label": "Analytics"
-    },
-    "iap_checking": {
-        "type": "yes_no",
-        "label": "IAP Checking"
-    },
-    "monthly_charge": {
-        "type": "price",
-        "label": "Monthly Charge"
-    },
-    "monthly_active_users": {
-        "type": "price",
-        "label": "Per Monthly AU"
-    }
-};
 // Display the data in a table.
 for (var provider_name in provider_data)
 {
@@ -66,6 +48,7 @@ for (var provider_name in provider_data)
             entry.pricing = pricing_link;
             entry.analytics = plan.analytics;
             entry.iap_checking = plan.iap_checking;
+            entry.server_code = plan.server_code;
 
             if (plan.cost && plan.cost.monthly_charge)
             {
@@ -83,6 +66,15 @@ for (var provider_name in provider_data)
             else
             {
                 entry.monthly_active_users = 0;
+            }
+
+            if (plan.constraints && plan.constraints.api_calls)
+            {
+                entry.api_calls = plan.constraints.api_calls;
+            }
+            else
+            {
+                entry.api_calls = 0;
             }
 
             reworked_data[key] = entry;

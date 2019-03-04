@@ -50,6 +50,26 @@ var provider_data =
             }
         }
     },
+    "app42":{
+        "www":"http://api.shephertz.com/",
+        "pricing":{
+            "_link":"http://api.shephertz.com/pricing.php",
+            "free": {
+                "constraints":{
+                    "api_calls": 1000000,
+                    "bandwidth": "1gb",
+                    "storage": "1gb"
+                }
+            },
+            "medium": {
+                "constraints":{
+                    "api_calls": 15000000,
+                    "bandwidth": "15gb",
+                    "storage": "15gb"
+                }
+            }
+        }
+    },
     "gamesparks":{
         "www":"https://www.gamesparks.com/",
         "pricing":{
@@ -75,26 +95,6 @@ var provider_data =
                         "data_pu": "20mb",
                         "bandwidth_pu": "10mb"
                     }
-                }
-            }
-        }
-    },
-    "app42":{
-        "www":"http://api.shephertz.com/",
-        "pricing":{
-            "_link":"http://api.shephertz.com/pricing.php",
-            "free": {
-                "constraints":{
-                    "api_calls": 1000000,
-                    "bandwidth": "1gb",
-                    "storage": "1gb"
-                }
-            },
-            "medium": {
-                "constraints":{
-                    "api_calls": 15000000,
-                    "bandwidth": "15gb",
-                    "storage": "15gb"
                 }
             }
         }
@@ -132,6 +132,27 @@ var provider_data =
         "www":"https://firebase.google.com/"
     },
     "chilliconnect":{
-        "www": "https://www.chilliconnect.com/"
+        "www": "https://www.chilliconnect.com/",
+        "pricing":{
+            "_link":"https://www.chilliconnect.com/pricing/",
+            "Indie": {
+                "cost":{
+                    "monthly_charge": 49,
+                    "monthly_active_users": 0
+                },
+                "constraints":{
+                    "api_calls": 1000000
+                }
+            },
+            "Start Up": {
+                "cost":{
+                    "monthly_charge": 249,
+                    "monthly_active_users": 0
+                },
+                "constraints":{
+                    "api_calls": 2000000
+                }
+            }
+        }
     }
 };
