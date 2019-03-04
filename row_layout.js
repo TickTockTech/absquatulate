@@ -11,6 +11,10 @@ var table_items = {
         "type": "yes_no",
         "label": "IAP Checking"
     },
+    "push_notifications": {
+        "type": "yes_no",
+        "label": "Push notifications"
+    },
     "server_code": {
         "type": "yes_no",
         "label": "Server Code"

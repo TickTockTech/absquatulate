@@ -49,6 +49,7 @@ for (var provider_name in provider_data)
             entry.analytics = plan.analytics;
             entry.iap_checking = plan.iap_checking;
             entry.server_code = plan.server_code;
+            entry.push_notifications = plan.push_notifications;
 
             if (plan.cost && plan.cost.monthly_charge)
             {

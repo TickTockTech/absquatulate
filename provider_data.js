@@ -14,7 +14,7 @@ var provider_data =
                 "analytics":true,
                 "iap_checking":true,
                 "server_code":true,
-                "content_management":true,
+                "push_notifications":false,
                 "constraints":{
                     "mau":1000
                 }
@@ -29,7 +29,7 @@ var provider_data =
                 "analytics":true,
                 "iap_checking":true,
                 "server_code":true,
-                "content_management":true,
+                "push_notifications":false,
                 "constraints":{
                     "monthly_active_users":100000
                 }
@@ -44,7 +44,7 @@ var provider_data =
                 "analytics":true,
                 "iap_checking":true,
                 "server_code":true,
-                "content_management":true,
+                "push_notifications":false,
                 "constraints":{
                 }
             }
@@ -55,6 +55,7 @@ var provider_data =
         "pricing":{
             "_link":"http://api.shephertz.com/pricing.php",
             "free": {
+                "push_notifications":true,
                 "constraints":{
                     "api_calls": 1000000,
                     "bandwidth": "1gb",
@@ -62,10 +63,15 @@ var provider_data =
                 }
             },
             "medium": {
+                "push_notifications":true,
+                "cost":{
+                    "monthly_charge": 100,
+                    "monthly_active_users": 0
+                },
                 "constraints":{
                     "api_calls": 15000000,
-                    "bandwidth": "15gb",
-                    "storage": "15gb"
+                    "bandwidth": "1gb",
+                    "storage": "1gb"
                 }
             }
         }
@@ -87,7 +93,7 @@ var provider_data =
                 "analytics":true,
                 "iap_checking":true,
                 "server_code":true,
-                "content_management":true,
+                "push_notifications":false,
                 "constraints":{
                     "concurrent_users":10000,
                     "fair_use": {
@@ -107,7 +113,37 @@ var provider_data =
         "tech":"namaka"
     },
     "gamua":{
-        "www":"https://gamua.com/"
+        "www":"https://gamua.com/",
+        "tech":"flox",
+        "pricing": {
+            "_link":"https://gamua.com/flox/pricing/",
+            "Lone Wolf": {
+                "push_notifications":false,
+                "analytics":true,
+                "iap_checking":false,
+                "cost":{
+                    "monthly_charge": 29,
+                    "monthly_active_users": 0,
+                    "carry_over": true
+                },
+                "constraints":{
+                    "api_calls": 2000000
+                }
+            },
+            "Indie": {
+                "push_notifications":false,
+                "analytics":true,
+                "iap_checking":false,
+                "cost":{
+                    "monthly_charge": 99,
+                    "monthly_active_users": 0,
+                    "carry_over": true
+                },
+                "constraints":{
+                    "api_calls": 8000000
+                }
+            }
+        }
     },
     "back4app":{
         "www":"https://www.back4app.com/",
@@ -117,7 +153,18 @@ var provider_data =
         "www":"https://buddy.com/"
     },
     "kinvey":{
-        "www":"https://www.progress.com/kinvey"
+        "www":"https://www.progress.com/kinvey",
+        "pricing": {
+            "_link":"https://www.progress.com/kinvey/pricing",
+            "Business Edition": {
+                "server_code":true,
+                "push_notifications":false,
+                "cost":{
+                    "monthly_charge": 4995,
+                    "monthly_active_users": 0
+                }
+            }
+        }
     },
     "kumulos":{
         "www":"https://www.kumulos.com/"
@@ -129,13 +176,41 @@ var provider_data =
         "www":"https://aws.amazon.com/"
     },
     "firebase":{
-        "www":"https://firebase.google.com/"
+        "www":"https://firebase.google.com/",
+        "pricing":{
+            "_link":"https://www.chilliconnect.com/pricing/",
+            "Spark Plan": {
+                "analytics":true,
+                "push_notifications":true,
+                "server_code":true,
+                "cost":{
+                    "monthly_charge": 0,
+                    "monthly_active_users": 0
+                },
+                "constraints":{
+                    "api_calls": 125000
+                }
+            },
+            "Flame Plan": {
+                "analytics":true,
+                "push_notifications":true,
+                "server_code":true,
+                "cost":{
+                    "monthly_charge": 25,
+                    "monthly_active_users": 0
+                },
+                "constraints":{
+                    "api_calls": 2000000
+                }
+            }
+        }
     },
     "chilliconnect":{
         "www": "https://www.chilliconnect.com/",
         "pricing":{
             "_link":"https://www.chilliconnect.com/pricing/",
             "Indie": {
+                "push_notifications":false,
                 "cost":{
                     "monthly_charge": 49,
                     "monthly_active_users": 0
@@ -145,6 +220,7 @@ var provider_data =
                 }
             },
             "Start Up": {
+                "push_notifications":false,
                 "cost":{
                     "monthly_charge": 249,
                     "monthly_active_users": 0
