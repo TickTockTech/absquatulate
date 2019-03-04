@@ -1,0 +1,53 @@
+table {
+    margin: 0px;
+    padding: 0px;
+    border-spacing: 0px;
+}
+tr.even {
+    background-color:#EEE;
+}
+th.rotate {
+  /* Something you can count on */
+  height: 140px;
+  white-space: nowrap;
+  text-align: left;
+}
+th.rotate > div {
+  transform:
+    /* Magic Numbers */
+    translate(2px, 67px)
+    /* 45 is really 360 - 45 */
+    rotate(315deg);
+  width: 40px;
+}
+th.rotate > div > span {
+  border-top: 1px solid #ccc;
+  padding: 5px 30px;
+  font-family: Verdana;
+  font-size: 14px;
+  font-weight: bold;
+}
+td.item
+{
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+    font-family: Verdana;
+    font-size: 14px;
+    font-weight: normal;
+}
+td.norm
+{
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-family: Verdana;
+    font-size: 12px;
+}
+td.yes
+{
+    background-color:#CFC;
+}
+.conditions {
+    padding-top: 20px;
+    font-family: Verdana;
+    font-size: 12px;
+}
