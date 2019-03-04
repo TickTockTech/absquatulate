@@ -1,0 +1,222 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script language="javascript" src="provider_data.js"></script>
+        <script language="javascript">
+// Allow conditions to be added at bottom.
+var conditions = "";
+var condition_no = 0;
+function add_condition(note)
+{
+    var line = "";
+    var mark = "";
+    condition_no++;
+    for(var i = 0; i < condition_no; ++i)
+        mark += "*";
+
+    line = mark + " - " + note;
+
+    conditions += line;
+
+    return mark;
+}
+
+// Reformat the data to be a list of provider:plan entries so we can draw them in a table.
+var rejigged = {};
+var table_items = {
+    "analytics": {
+        "type": "yes_no",
+        "label": "Analytics"
+    },
+    "iap_checking": {
+        "type": "yes_no",
+        "label": "IAP Checking"
+    },
+    "monthly_charge": {
+        "type": "price",
+        "label": "Monthly Charge"
+    },
+    "monthly_active_users": {
+        "type": "price",
+        "label": "Per Monthly AU"
+    }
+};
+// Display the data in a table.
+for (var provider_name in provider_data)
+{
+    var provider = provider_data[provider_name];
+    var web_page = provider.www;
+    var pricing_link = "n/a";
+    for (var plan_name in provider.pricing)
+    {
+        if (plan_name != "_link")
+        {
+            var key = provider_name + ": " + plan_name;
+            var plan = provider.pricing[plan_name];
+
+            var entry = {};
+
+            entry.www = web_page;
+            entry.pricing = pricing_link;
+            entry.analytics = plan.analytics;
+            entry.iap_checking = plan.iap_checking;
+
+            if (plan.cost && plan.cost.monthly_charge)
+            {
+                entry.monthly_charge = plan.cost.monthly_charge;
+            }
+            else
+            {
+                entry.monthly_charge = 0;
+            }
+
+            if (plan.cost && plan.cost.monthly_charge)
+            {
+                entry.monthly_active_users = plan.cost.monthly_active_users;
+            }
+            else
+            {
+                entry.monthly_active_users = 0;
+            }
+
+            rejigged[key] = entry;
+        }
+        else
+        {
+            pricing_link = provider.pricing._link;
+        }
+    }
+
+}
+
+var table = "<table>\n";
+
+// Plan names across the top.
+var first_line = "<th>&nbsp;</th>";
+for (var plan in rejigged)
+{
+    first_line += "<th class='rotate'><div class='provider'><span>" + plan + "</span></div></th>";
+}
+
+table += "<tr class='rotate'>" + first_line + "</tr>";
+
+var ix = 0;
+for (var item in table_items)
+{
+    var line = null;
+    if (++ix % 2 == 1)
+    {
+        line = "<tr class='odd'>\n";
+    }
+    else
+    {
+        line = "<tr class='even'>\n";
+    }
+    line += "<td class='item'>" + table_items[item].label + "</td>";
+
+    for (var plan_name in rejigged)
+    {
+        var plan = rejigged[plan_name];
+
+        if (table_items[item].type == "yes_no")
+        {
+            if (plan[item])
+            {
+                line += "<td class='norm yes'>" + (plan[item] ? "YES" : "NO") + "</td>\n";
+            }
+            else
+            {
+                line += "<td class='norm'>" + (plan[item] ? "YES" : "NO") + "</td>\n";
+            }
+        }
+        if (table_items[item].type == "price")
+        {
+            if (plan[item] instanceof Object)
+            {
+                it = plan[item];
+                if (it.above_mau)
+                {
+                    mark = add_condition("Above " + it.above_mau + " MAU.");
+                    line += "<td class='norm'>$" + it.cost + mark + "</td>\n";
+                }
+            }
+            else
+            {
+                line += "<td class='norm'>$" + plan[item] + "</td>\n";
+            }
+        }
+        if (table_items[item].type == "int")
+        {
+            line += "<td class='norm'>" + plan[item] + "</td>\n";
+        }
+    }
+    line += "</tr>\n";
+
+    table += line;
+}
+table += "</table>\n";
+        </script>
+        <style>
+            table {
+                margin: 0px;
+                padding: 0px;
+                border-spacing: 0px;
+            }
+            tr.even {
+                background-color:#EEE;
+            }
+            th.rotate {
+              /* Something you can count on */
+              height: 140px;
+              white-space: nowrap;
+              text-align: left;
+            }
+            th.rotate > div {
+              transform:
+                /* Magic Numbers */
+                translate(2px, 67px)
+                /* 45 is really 360 - 45 */
+                rotate(315deg);
+              width: 40px;
+            }
+            th.rotate > div > span {
+              border-top: 1px solid #ccc;
+              padding: 5px 30px;
+              font-family: Verdana;
+              font-size: 14px;
+              font-weight: bold;
+            }
+            td.item
+            {
+                border-bottom: 1px solid #ccc;
+                padding: 5px;
+                font-family: Verdana;
+                font-size: 14px;
+                font-weight: normal;
+            }
+            td.norm
+            {
+                border: 1px solid #ccc;
+                padding: 5px;
+                font-family: Verdana;
+                font-size: 12px;
+            }
+            td.yes
+            {
+                background-color:#CFC;
+            }
+            .conditions {
+                padding-top: 20px;
+                font-family: Verdana;
+                font-size: 12px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="content"></div>
+    </body>
+    <script>
+var element = document.getElementById("content");
+element.innerHTML = "<div class='data'>" + table + "</div>\n<div class='conditions'>" + conditions + "</div>";
+    </script>
+</html>
