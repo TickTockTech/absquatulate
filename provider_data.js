@@ -10,7 +10,7 @@ var provider_data =
                     "api_calls": 0,
                     "monthly_active_users": 0,
                     "constraints":{
-                        "mau":1000
+                        "monthly_active_users":1000
                     }
                 },
                 "player_profiles":true,
@@ -67,8 +67,8 @@ var provider_data =
                     "monthly_active_users": 0,
                     "constraints":{
                         "api_calls": 15000000,
-                        "bandwidth": "1gb",
-                        "storage": "1gb"
+                        "bandwidth": "15gb",
+                        "storage": "15gb"
                     }
                 }
             }
@@ -183,10 +183,10 @@ var provider_data =
                 "server_code":true,
                 "cost":{
                     "monthly_charge": 0,
-                    "monthly_active_users": 0,
-                    "constraints":{
-                        "api_calls": 125000
-                    }
+                    "monthly_active_users": 0
+                },
+                "constraints":{
+                    "api_calls": 125000
                 }
             },
             "Flame Plan": {
@@ -195,10 +195,10 @@ var provider_data =
                 "server_code":true,
                 "cost":{
                     "monthly_charge": 25,
-                    "monthly_active_users": 0,
-                    "constraints":{
-                        "api_calls": 2000000
-                    }
+                    "monthly_active_users": 0
+                },
+                "constraints":{
+                    "api_calls": 2000000
                 }
             }
         }
