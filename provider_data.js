@@ -88,11 +88,10 @@ var provider_data =
                     },
                     "constraints":{
                         "concurrent_users":10000,
-                        "fair_use": {
-                            "api_calls": 5000,
-                            "data_pu": "20mb",
-                            "bandwidth_pu": "10mb"
-                        }
+                        "api_calls_pu": 5000,
+                        "data_pu": "20mb",
+                        "bandwidth_pu": "10mb",
+                        "notes": "Fair use policy."
                     }
                 },
                 "player_profiles":true,

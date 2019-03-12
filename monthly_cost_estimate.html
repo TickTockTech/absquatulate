@@ -99,6 +99,21 @@
             setField('s_mpm', readSlider("mpm"));
             setField('s_apg', readSlider("apg"));
         }
+        function asBytes(val)
+        {
+            val = val.toLowerCase().trim();
+            if (val.endsWith("gb"))
+            {
+                val = val.substring(0, val.length - 2);
+                return parseInt(val) * 1024 * 1024 * 1024;
+            }
+            else if (val.endsWith("mb"))
+            {
+                val = val.substring(0, val.length - 2);
+                return parseInt(val) * 1024 * 1024 * 1024;
+            }
+            return val;
+        }
         window.produceGraph = function()
         {
             var vals = readSliders();
@@ -106,6 +121,7 @@
             var charging_data = dataDrill("*.pricing.*.cost", provider_data);
             var max_mau = dataDrill("*.pricing.*.cost.constraints.monthly_active_users", provider_data);
             var max_api = dataDrill("*.pricing.*.constraints.api_calls", provider_data);
+            var constraints = dataDrill("*.pricing.*.cost.constraints", provider_data);
 
             var monthly_active_users = vals.mau;
             var api_calls_per_game = vals.apg;
@@ -125,11 +141,35 @@
                 var provider = providers[i];
                 var maxU = max_mau[provider];
                 var maxA = max_api[provider];
+                var cons = constraints[provider];
 
                 if (monthly_active_users > maxU || total_api_calls > maxA)
                 {
                     providers.splice(i, 1);
                     --i;
+                }
+
+                // TODO: Check data limits
+                if (cons && (cons.bandwidth || cons.bandwidth_pu))
+                {
+                    if (cons.bandwidth)
+                    {
+                        var maxB = asBytes(cons.bandwidth);
+                        if (download_total * 1024 * 1024 > maxB)
+                        {
+                            providers.splice(i, 1);
+                            --i;
+                        }
+                    }
+                    else if (cons.bandwidth_pu)
+                    {
+                        var maxB = asBytes(cons.bandwidth_pu);
+                        if (mb_per_month * 1024 * 1024 > maxB)
+                        {
+                            providers.splice(i, 1);
+                            --i;
+                        }
+                    }
                 }
             }
 
@@ -161,8 +201,6 @@
                         cost += cDat.monthly_active_users * monthly_active_users;
                     }
                 }
-
-                // TODO: Check data limits
 
                 PROVIDER_COST[i] = cost;
             }
