@@ -8,31 +8,31 @@ var provider_data =
                 "cost":{
                     "monthly_charge": 0,
                     "api_calls": 0,
-                    "monthly_active_users": 0
+                    "monthly_active_users": 0,
+                    "constraints":{
+                        "mau":1000
+                    }
                 },
                 "player_profiles":true,
                 "analytics":true,
                 "iap_checking":true,
                 "server_code":true,
-                "push_notifications":false,
-                "constraints":{
-                    "mau":1000
-                }
+                "push_notifications":false
             },
             "indie":{
                 "cost":{
                     "monthly_charge": 99,
                     "api_calls": 0,
-                    "monthly_active_users": 0
+                    "monthly_active_users": 0,
+                    "constraints":{
+                        "monthly_active_users":100000
+                    }
                 },
                 "player_profiles":true,
                 "analytics":true,
                 "iap_checking":true,
                 "server_code":true,
-                "push_notifications":false,
-                "constraints":{
-                    "monthly_active_users":100000
-                }
+                "push_notifications":false
             },
             "professional":{
                 "cost":{
@@ -44,9 +44,7 @@ var provider_data =
                 "analytics":true,
                 "iap_checking":true,
                 "server_code":true,
-                "push_notifications":false,
-                "constraints":{
-                }
+                "push_notifications":false
             }
         }
     },
@@ -66,12 +64,12 @@ var provider_data =
                 "push_notifications":true,
                 "cost":{
                     "monthly_charge": 100,
-                    "monthly_active_users": 0
-                },
-                "constraints":{
-                    "api_calls": 15000000,
-                    "bandwidth": "1gb",
-                    "storage": "1gb"
+                    "monthly_active_users": 0,
+                    "constraints":{
+                        "api_calls": 15000000,
+                        "bandwidth": "1gb",
+                        "storage": "1gb"
+                    }
                 }
             }
         }
@@ -87,21 +85,21 @@ var provider_data =
                     "monthly_active_users": {
                         "cost": 0.008,
                         "above_mau": 37375
+                    },
+                    "constraints":{
+                        "concurrent_users":10000,
+                        "fair_use": {
+                            "api_calls": 5000,
+                            "data_pu": "20mb",
+                            "bandwidth_pu": "10mb"
+                        }
                     }
                 },
                 "player_profiles":true,
                 "analytics":true,
                 "iap_checking":true,
                 "server_code":true,
-                "push_notifications":false,
-                "constraints":{
-                    "concurrent_users":10000,
-                    "fair_use": {
-                        "api_calls": 5000,
-                        "data_pu": "20mb",
-                        "bandwidth_pu": "10mb"
-                    }
-                }
+                "push_notifications":false
             }
         }
     },
@@ -124,10 +122,10 @@ var provider_data =
                 "cost":{
                     "monthly_charge": 29,
                     "monthly_active_users": 0,
-                    "carry_over": true
-                },
-                "constraints":{
-                    "api_calls": 2000000
+                    "carry_over": true,
+                    "constraints":{
+                        "api_calls": 2000000
+                    }
                 }
             },
             "Indie": {
@@ -137,10 +135,10 @@ var provider_data =
                 "cost":{
                     "monthly_charge": 99,
                     "monthly_active_users": 0,
-                    "carry_over": true
-                },
-                "constraints":{
-                    "api_calls": 8000000
+                    "carry_over": true,
+                    "constraints":{
+                        "api_calls": 8000000
+                    }
                 }
             }
         }
@@ -185,10 +183,10 @@ var provider_data =
                 "server_code":true,
                 "cost":{
                     "monthly_charge": 0,
-                    "monthly_active_users": 0
-                },
-                "constraints":{
-                    "api_calls": 125000
+                    "monthly_active_users": 0,
+                    "constraints":{
+                        "api_calls": 125000
+                    }
                 }
             },
             "Flame Plan": {
@@ -197,10 +195,10 @@ var provider_data =
                 "server_code":true,
                 "cost":{
                     "monthly_charge": 25,
-                    "monthly_active_users": 0
-                },
-                "constraints":{
-                    "api_calls": 2000000
+                    "monthly_active_users": 0,
+                    "constraints":{
+                        "api_calls": 2000000
+                    }
                 }
             }
         }

@@ -51,3 +51,6 @@ td.yes
     font-family: Verdana;
     font-size: 12px;
 }
+span.val {
+    font-weight:bold;
+}

@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+    	<div id="container" style="width: 75%; height: 75%">
+    		<canvas id="canvas" width=640 height=480></canvas>
+    	</div>
+        <div>
+            <h2>
+        </div>
+        <div id="content"></div>
+        <div><hr/></div>
+        <div>
+            <table>
+                <tr>
+                    <td><button onclick="window.location.href='index.html'">Home</button></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    <!-- data -->
+    <script language="javascript" src="provider_data.js"></script>
+    <script language="javascript" src="graph_utils.js"></script>
+    <script language="javascript" src="3rd_party/Chart.bundle.min.js"></script>
+    <script language="javascript">
+
+
+        var extracted_data = dataDrill("*.pricing.*.cost.monthly_charge", provider_data);
+
+        var LABELS = Object.keys(extracted_data);
+        var DATA = [];
+        for (var i = 0; i < LABELS.length; ++i)
+        {
+            DATA[i] = extracted_data[LABELS[i]];
+        }
+
+		var color = Chart.helpers.color;
+		var barChartData = {
+			labels: LABELS,
+			datasets: [{
+				label: 'Monthly Charge',
+				backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+				borderColor: window.chartColors.red,
+				borderWidth: 1,
+				data: DATA
+			}]
+
+		};
+
+		var ctx = document.getElementById('canvas').getContext('2d');
+		window.myBar = new Chart(ctx, {
+			type: 'horizontalBar',
+			data: barChartData,
+			options: {
+				responsive: true,
+				legend: {
+					position: 'bottom',
+				},
+				title: {
+					display: true,
+					text: 'Monthly charge graph.'
+				}
+			}
+		});
+    </script>
+</html>

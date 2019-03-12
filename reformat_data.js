@@ -69,9 +69,9 @@ for (var provider_name in provider_data)
                 entry.monthly_active_users = 0;
             }
 
-            if (plan.constraints && plan.constraints.api_calls)
+            if (plan.cost && plan.cost.constraints && plan.cost.constraints.api_calls)
             {
-                entry.api_calls = plan.constraints.api_calls;
+                entry.api_calls = plan.constraints.cost.api_calls;
             }
             else
             {

@@ -7,25 +7,130 @@
     		<canvas id="canvas" width=640 height=480></canvas>
     	</div>
         <div>
-            <h2>
+            <table>
+                <tr>
+                    <td>Total MB downloaded: <span class="val" id="tmb"></span></td>
+                </tr>
+                <tr>
+                    <td>Total API calls: <span class="val" id="tac"></span></td>
+                </tr>
+            </table>
         </div>
-        <div id="content"></div>
+        <div>
+            <table>
+                <tr>
+                    <td>Monthly Active Users (<span class="val" id="s_mau"></span>): <input type="range" onchange="setField('s_mau', this.value)" min="10" max="100000" value="1000" class="slider" id="mau"></td>
+                </tr>
+                <tr>
+                    <td>Avg. Games per Month per User (<span class="val" id="s_gpm"></span>): <input type="range" onchange="setField('s_gpm', this.value)" min="1" max="300" value="10" class="slider" id="gpm"></td>
+                </tr>
+                <tr>
+                    <td>MB downloaded per User per Month (<span class="val" id="s_mpm"></span>): <input type="range" onchange="setField('s_mpm', this.value)" min="0" max="500" value="10" class="slider" id="mpm"></td>
+                </tr>
+                <tr>
+                    <td>API Calls per Game (<span class="val" id="s_apg"></span>): <input type="range" onchange="setField('s_apg', this.value)" min="0" max="100" value="10" class="slider" id="apg"></td>
+                </tr>
+                <tr>
+                    <td><button onclick="window.produceGraph();'">Calc</button></td>
+                </tr>
+            </table>
+        </div>
+        <div><hr/></div>
+        <div>
+            <table>
+                <tr>
+                    <td><button onclick="window.location.href='index.html'">Home</button></td>
+                </tr>
+            </table>
+        </div>
     </body>
     <!-- data -->
     <script language="javascript" src="provider_data.js"></script>
     <script language="javascript" src="graph_utils.js"></script>
     <script language="javascript" src="3rd_party/Chart.bundle.min.js"></script>
     <script language="javascript">
-
-
-        var extracted_data = dataDrill("*.pricing.*.cost.monthly_charge", provider_data);
-
-        var LABELS = Object.keys(extracted_data);
-        var DATA = [];
-        for (var i = 0; i < LABELS.length; ++i)
+        function setField(name, value)
         {
-            DATA[i] = extracted_data[LABELS[i]];
+            var element = document.getElementById(name);
+            element.innerHTML = value;
         }
+        function readSlider(name)
+        {
+            var element = document.getElementById(name);
+            return element.value;
+        }
+        function readSliders()
+        {
+            return {
+                "mau": readSlider("mau"),
+                "gpm": readSlider("gpm"),
+                "mpm": readSlider("mpm"),
+                "apg": readSlider("apg"),
+            }
+        }
+        function init()
+        {
+            var vals = readSliders();
+            setField('s_mau', readSlider("mau"));
+            setField('s_gpm', readSlider("gpm"));
+            setField('s_mpm', readSlider("mpm"));
+            setField('s_apg', readSlider("apg"));
+        }
+        window.produceGraph = function()
+        {
+            var vals = readSliders();
+
+            var charging_data = dataDrill("*.pricing.*.cost", provider_data);
+            var max_mau = dataDrill("*.pricing.*.constraints.monthly_active_users", provider_data);
+
+            var monthly_active_users = vals.mau;
+            var api_calls_per_game = vals.apg;
+            var games_per_user = vals.gpm;
+            var mb_per_month = vals.mpm;
+
+            var total_api_calls = monthly_active_users * games_per_user * api_calls_per_game;
+            var download_total = monthly_active_users * mb_per_month;
+
+            setField("tac", total_api_calls);
+            setField("tmb", download_total);
+        }
+
+        var vals = readSliders();
+
+        var charging_data = dataDrill("*.pricing.*.cost", provider_data);
+        var max_mau = dataDrill("*.pricing.*.constraints.monthly_active_users", provider_data);
+
+        var monthly_active_users = vals.mau;
+        var api_calls_per_game = vals.apg;
+        var games_per_user = vals.gpm;
+        var mb_per_month = vals.mpm;
+
+        var total_api_calls = monthly_active_users * games_per_user * api_calls_per_game;
+        var download_total = monthly_active_users * mb_per_month;
+
+        setField("tac", total_api_calls);
+        setField("tmb", download_total);
+
+        var PROVIDER_COST = [];
+        for (var provider in charging_data)
+        {
+            var cDat = charging_data[provider];
+            var cost = 0;
+            var tot_api_calls = monthly_active_users * games_per_user * api_calls_per_game;
+
+            if ("monthly_charge" in cDat)
+            {
+                cost += cDat.monthly_charge;
+            }
+
+            if ("monthly_charge" in cDat)
+            {
+                cost += cDat.monthly_charge;
+            }
+
+        }
+
+        var LABELS = Object.keys(charging_data);
 
 		var color = Chart.helpers.color;
 		var barChartData = {
@@ -35,7 +140,7 @@
 				backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
 				borderColor: window.chartColors.red,
 				borderWidth: 1,
-				data: DATA
+				data: PROVIDER_COST
 			}]
 
 		};
@@ -55,5 +160,7 @@
 				}
 			}
 		});
+
+        init();
     </script>
 </html>
